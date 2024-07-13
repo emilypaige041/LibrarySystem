@@ -18,3 +18,7 @@ This is a simple Java-based Library Management System that allows users to perfo
 ## How to Run
 
 1. **Clone the Repository:**
+
+   ```bash
+   git clone https://github.com/your-username/library-management-system.git
+   cd library-management-system
