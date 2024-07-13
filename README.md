@@ -12,7 +12,7 @@ This is a simple Java-based Library Management System that allows users to perfo
 
 ## Requirements
 
-- Java Development Kit (JDK) 8 or higher
+- Java Development Kit (JDK)
 - An IDE or text editor for Java development
 
 ## How to Run
