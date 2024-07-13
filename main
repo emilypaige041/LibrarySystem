@@ -1,0 +1,115 @@
+import java.util.List;
+import java.util.Scanner;
+
+public class LibrarySystem {
+    private static Library library = new Library();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            displayMenu();
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    addBook();
+                    break;
+                case 2:
+                    displayAllBooks();
+                    break;
+                case 3:
+                    searchBooks();
+                    break;
+                case 4:
+                    updateBook();
+                    break;
+                case 5:
+                    deleteBook();
+                    break;
+                case 6:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please enter a number from 1 to 6.");
+            }
+        }
+    }
+
+    private static void displayMenu() {
+        System.out.println("\nLibrary Management System Menu:");
+        System.out.println("1. Add a new book");
+        System.out.println("2. Display all books");
+        System.out.println("3. Search for books");
+        System.out.println("4. Update a book");
+        System.out.println("5. Delete a book");
+        System.out.println("6. Exit");
+        System.out.print("Enter your choice: ");
+    }
+
+    private static void addBook() {
+        System.out.print("Enter book title: ");
+        String title = scanner.nextLine();
+        System.out.print("Enter book author: ");
+        String author = scanner.nextLine();
+        library.addBook(title, author);
+        System.out.println("Book added successfully.");
+    }
+
+    private static void displayAllBooks() {
+        List<Book> books = library.getAllBooks();
+        if (books.isEmpty()) {
+            System.out.println("No books in the library.");
+        } else {
+            System.out.println("\nAll Books in the Library:");
+            for (Book book : books) {
+                System.out.println(book);
+            }
+        }
+    }
+
+    private static void searchBooks() {
+        System.out.print("Enter search keyword: ");
+        String keyword = scanner.nextLine();
+        List<Book> foundBooks = library.searchBooksByTitle(keyword);
+        foundBooks.addAll(library.searchBooksByAuthor(keyword));
+        if (foundBooks.isEmpty()) {
+            System.out.println("No books found matching '" + keyword + "'.");
+        } else {
+            System.out.println("\nSearch Results:");
+            for (Book book : foundBooks) {
+                System.out.println(book);
+            }
+        }
+    }
+
+    private static void updateBook() {
+        System.out.print("Enter ID of the book to update: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        Book bookToUpdate = library.getBookById(id);
+        if (bookToUpdate == null) {
+            System.out.println("Book with ID " + id + " not found.");
+        } else {
+            System.out.print("Enter new title (leave empty to keep current): ");
+            String newTitle = scanner.nextLine();
+            if (!newTitle.isEmpty()) {
+                bookToUpdate.setTitle(newTitle);
+            }
+            System.out.print("Enter new author (leave empty to keep current): ");
+            String newAuthor = scanner.nextLine();
+            if (!newAuthor.isEmpty()) {
+                bookToUpdate.setAuthor(newAuthor);
+            }
+            System.out.println("Book updated successfully.");
+        }
+    }
+
+    private static void deleteBook() {
+        System.out.print("Enter ID of the book to delete: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        library.deleteBook(id);
+        System.out.println("Book deleted successfully.");
+    }
+}
